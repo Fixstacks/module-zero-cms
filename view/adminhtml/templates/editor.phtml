@@ -1,0 +1,58 @@
+<?php
+/**
+ * Copyright © 2026 Roman Pasichnyk
+ * SPDX-License-Identifier: OSL-3.0 OR AFL-3.0
+ *
+ * The Zero CMS editor: component list and fields on the left, the live
+ * storefront preview on the right. Built by web/js/editor.js from the JSON
+ * below (ViewModel\Adminhtml\Editor). Texts for the script are here, so
+ * they go through translation.
+ *
+ * @var \Magento\Backend\Block\Template $block
+ * @var \Magento\Framework\Escaper $escaper
+ * @var \Zero\Cms\ViewModel\Adminhtml\Editor $viewModel
+ */
+$viewModel = $block->getData('viewModel');
+$config = $viewModel->getConfig((array) $block->getData('target'));
+$config['i18n'] = [
+    'add' => __('Add'), 'addComponent' => __('Add a component'), 'remove' => __('Remove'),
+    'moveUp' => __('Move up'), 'moveDown' => __('Move down'), 'save' => __('Save'), 'saving' => __('Saving...'),
+    'saved' => __('Saved'), 'unsaved' => __('Unsaved changes'), 'versions' => __('Versions'),
+    'restore' => __('Load this version'), 'restored' => __('Version loaded. Save to publish it.'),
+    'noVersions' => __('No earlier versions yet.'), 'empty' => __('No components yet. Add the first one below.'),
+    'inherited' => __('This store view shows the All Store Views content. Saving here makes a copy for this store view only.'),
+    'own' => __('This store view has its own content.'),
+    'newContent' => __('No Zero CMS content yet: the storefront shows its current content (a page\'s HTML, a post\'s excerpt) until you save.'),
+    'reset' => __('Use All Store Views content'), 'resetConfirm' => __('Remove this store view\'s own content?'),
+    'storeView' => __('Store View'), 'preview' => __('Preview'), 'openPage' => __('Open page'),
+    'back' => __('Back'), 'upload' => __('Upload image'), 'uploading' => __('Uploading...'),
+    'alt' => __('Alt text (describes the image)'), 'removeImage' => __('Remove image'),
+    'url' => __('Link URL'), 'label' => __('Link text'), 'addItem' => __('Add item'),
+    'item' => __('Item %1'), 'fromCategory' => __('From a category'), 'fromSkus' => __('These SKUs'),
+    'categoryId' => __('Category ID'), 'skus' => __('SKUs, comma separated'), 'required' => __('required'),
+    'error' => __('Something went wrong: %1'), 'leave' => __('You have unsaved changes.'),
+    'dragHint' => __('Drag to reorder, or use the arrow buttons.'),
+    'desktop' => __('Desktop'), 'mobile' => __('Mobile'), 'storeTime' => __('Store time: %1'),
+    'share' => __('Sharing in social media'),
+    'shareHint' => __('What a shared link to this page shows. Empty: the page\'s meta title and description, and its first image.'),
+    'shareImage' => __('Image (1200 × 630 px works everywhere)'),
+    'shareTitle' => __('Title'),
+    'shareDescription' => __('Text'),
+    'markdownHint' => __('## Heading, ### Subheading, - list, 1. list, > quote, **bold**, *italic*, [link](/path), a blank line between paragraphs.'),
+    'aiBuild' => __('Build the page with AI'), 'aiBrief' => __('Describe the page'),
+    'aiBriefExample' => __('E.g. A summer sale landing page for running gear: 20% off shoes until August 31, best sellers, free returns, FAQ about delivery.'),
+    'aiBriefHint' => __('The texts come in %1. Images are left for you to add.'),
+    'aiGenerate' => __('Generate'), 'aiWorking' => __('AI is working... (this can take a minute)'),
+    'aiReplace' => __('Replace the current components with the generated page? Nothing is published until you save.'),
+    'aiDone' => __('Generated. Check it, add images, then save.'),
+    'aiTranslateInto' => __('Translate into'), 'aiTranslate' => __('Translate'),
+    'aiTranslateConfirm' => __('Translate the texts on this page into %1? Links, images and products stay. Nothing is published until you save.'),
+    'aiTranslated' => __('Translated into %1. Check it, then save.'),
+    'aiWrite' => __('Write'), 'aiImprove' => __('Improve'), 'aiShorten' => __('Shorten'),
+];
+?>
+<script type="application/json" id="zero-cms-editor-config"><?= /* @noEscape */ json_encode($config, JSON_HEX_TAG | JSON_HEX_AMP) ?></script>
+<div id="zero-cms-editor" class="zero-cms-editor" aria-live="polite">
+    <p><?= $escaper->escapeHtml(__('Loading the editor...')) ?></p>
+</div>
+<script src="<?= $escaper->escapeUrl($block->getViewFileUrl('Zero_Cms::js/editor.js')) ?>" defer></script>

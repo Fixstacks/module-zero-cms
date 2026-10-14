@@ -1,0 +1,26 @@
+<?php
+/**
+ * Copyright © 2026 Roman Pasichnyk
+ * SPDX-License-Identifier: OSL-3.0 OR AFL-3.0
+ *
+ * Zero CMS component: call to action (etc/zero_cms/components.json).
+ *
+ * @var \Magento\Framework\View\Element\Template $block
+ * @var \Magento\Framework\Escaper $escaper
+ */
+$v = (array) $block->getData('values');
+/** @var \Zero\Cms\ViewModel\Component $view */
+$view = $block->getData('view');
+?>
+<section class="<?= $v['style'] === 'neutral' ? 'bg-neutral text-neutral-content' : 'bg-primary text-primary-content' ?> px-6 py-10 sm:px-12 sm:py-14 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+    <div class="flex flex-col gap-2 max-w-2xl">
+        <h2 class="text-2xl sm:text-3xl font-medium tracking-tight"><?= $escaper->escapeHtml($v['heading']) ?></h2>
+        <?= /* @noEscape */ $view->paragraphs($v['text']) ?>
+    </div>
+    <?php if ($v['button']['url'] !== '' && $v['button']['label'] !== ''): ?>
+        <a href="<?= $escaper->escapeUrl($v['button']['url']) ?>"
+           class="btn <?= $v['style'] === 'neutral' ? 'btn-primary' : 'btn-neutral' ?> shrink-0">
+            <?= $escaper->escapeHtml($v['button']['label']) ?>
+        </a>
+    <?php endif; ?>
+</section>

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--
+    Copyright © 2026 Roman Pasichnyk
+    SPDX-License-Identifier: OSL-3.0 OR AFL-3.0
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <virtualType name="Zero\Cms\Block\Adminhtml\EditBlockButton" type="Zero\Cms\Block\Adminhtml\EditButton">
+        <arguments>
+            <argument name="type" xsi:type="string">cms_block</argument>
+        </arguments>
+    </virtualType>
+</config>

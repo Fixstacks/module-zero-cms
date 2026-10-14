@@ -1,0 +1,15 @@
+<?php
+/**
+ * Copyright © 2026 Roman Pasichnyk
+ * SPDX-License-Identifier: OSL-3.0 OR AFL-3.0
+ *
+ * Zero CMS component: spacer (etc/zero_cms/components.json).
+ *
+ * @var \Magento\Framework\View\Element\Template $block
+ * @var \Magento\Framework\Escaper $escaper
+ */
+$v = (array) $block->getData('values');
+/** @var \Zero\Cms\ViewModel\Component $view */
+$view = $block->getData('view');
+?>
+<div aria-hidden="true" class="<?= /* @noEscape */ ['sm' => 'h-4', 'md' => 'h-12', 'lg' => 'h-24'][$v['size']] ?? 'h-12' ?>"></div>

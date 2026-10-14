@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--
+    Copyright © 2026 Roman Pasichnyk
+    SPDX-License-Identifier: OSL-3.0 OR AFL-3.0
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!-- CMS pages and blocks with Zero CMS content render it (Plugin\Cms\RenderZeroContent). -->
+    <type name="Magento\Cms\Block\Page">
+        <plugin name="zero_cms_render_page" type="Zero\Cms\Plugin\Cms\RenderZeroContent"/>
+    </type>
+    <type name="Magento\Cms\Block\Block">
+        <plugin name="zero_cms_render_block" type="Zero\Cms\Plugin\Cms\RenderZeroContent"/>
+    </type>
+    <type name="Magento\Cms\Block\Widget\Block">
+        <plugin name="zero_cms_render_widget_block" type="Zero\Cms\Plugin\Cms\RenderZeroContent"/>
+    </type>
+    <!-- CMS pages describe themselves for link previews (Zero_Core social tags). -->
+    <type name="Zero\Core\Model\Social\Tags">
+        <arguments>
+            <argument name="sources" xsi:type="array">
+                <item name="40_cms_page" xsi:type="object">Zero\Cms\Model\Social\CmsPageSource</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

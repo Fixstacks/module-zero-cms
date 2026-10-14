@@ -1,0 +1,37 @@
+<?php
+/**
+ * Copyright © 2026 Roman Pasichnyk
+ * SPDX-License-Identifier: OSL-3.0 OR AFL-3.0
+ *
+ * Zero CMS component: FAQ (etc/zero_cms/components.json).
+ *
+ * @var \Magento\Framework\View\Element\Template $block
+ * @var \Magento\Framework\Escaper $escaper
+ */
+$v = (array) $block->getData('values');
+/** @var \Zero\Cms\ViewModel\Component $view */
+$view = $block->getData('view');
+?>
+<?php
+$name = 'zero-faq-' . $block->getData('uid');
+$schema = ['@context' => 'https://schema.org', '@type' => 'FAQPage', 'mainEntity' => []];
+?>
+<section class="flex flex-col gap-4 max-w-3xl">
+    <?php if ($v['heading'] !== ''): ?>
+        <h2 class="text-2xl sm:text-3xl font-medium tracking-tight"><?= $escaper->escapeHtml($v['heading']) ?></h2>
+    <?php endif; ?>
+    <div class="divide-y divide-base-300 border-y border-base-300">
+        <?php foreach ($v['items'] as $i => $item): ?>
+            <?php if ($item['question'] === '') { continue; } ?>
+            <?php $schema['mainEntity'][] = ['@type' => 'Question', 'name' => $item['question'],
+                'acceptedAnswer' => ['@type' => 'Answer', 'text' => $item['answer']]]; ?>
+            <details name="<?= $escaper->escapeHtmlAttr($name) ?>" class="py-3"<?= $i === 0 ? ' open' : '' ?>>
+                <summary class="cursor-pointer font-medium"><?= $escaper->escapeHtml($item['question']) ?></summary>
+                <div class="mt-2 flex flex-col gap-2 text-sm leading-relaxed"><?= /* @noEscape */ $view->paragraphs($item['answer']) ?></div>
+            </details>
+        <?php endforeach; ?>
+    </div>
+</section>
+<?php if ($schema['mainEntity']): ?>
+    <script type="application/ld+json"><?= /* @noEscape */ json_encode($schema, JSON_HEX_TAG | JSON_UNESCAPED_UNICODE) ?></script>
+<?php endif; ?>

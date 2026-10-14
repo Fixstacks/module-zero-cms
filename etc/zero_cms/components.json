@@ -1,0 +1,142 @@
+{
+    "hero": {
+        "label": "Hero",
+        "description": "Large heading with an optional image and button, at the top of a page.",
+        "template": "Zero_Cms::components/hero.phtml",
+        "fields": {
+            "eyebrow": {"type": "text", "label": "Eyebrow", "max": 80},
+            "heading": {"type": "text", "label": "Heading", "required": true, "max": 120},
+            "text": {"type": "textarea", "label": "Text", "max": 600},
+            "image": {"type": "image", "label": "Image"},
+            "button": {"type": "link", "label": "Button"},
+            "align": {"type": "select", "label": "Text alignment", "options": {"start": "Start", "center": "Center"}, "default": "start"}
+        }
+    },
+    "article": {
+        "label": "Article",
+        "description": "Long text with headings, lists, quotes and links (Markdown). Its headings make a blog post's table of contents.",
+        "template": "Zero_Cms::components/article.phtml",
+        "fields": {
+            "body": {"type": "markdown", "label": "Text", "required": true, "max": 40000}
+        }
+    },
+    "figure": {
+        "label": "Image",
+        "description": "An image with a caption.",
+        "template": "Zero_Cms::components/figure.phtml",
+        "fields": {
+            "image": {"type": "image", "label": "Image", "required": true},
+            "caption": {"type": "text", "label": "Caption", "max": 300},
+            "size": {"type": "select", "label": "Size", "options": {"text": "Text width", "wide": "Full width"}, "default": "text"}
+        }
+    },
+    "quote": {
+        "label": "Quote",
+        "description": "A pull quote.",
+        "template": "Zero_Cms::components/quote.phtml",
+        "fields": {
+            "text": {"type": "textarea", "label": "Quote", "required": true, "max": 600},
+            "cite": {"type": "text", "label": "Who said it", "max": 160}
+        }
+    },
+    "html": {
+        "label": "HTML",
+        "description": "HTML from elsewhere, e.g. imported blog posts. Cleaned when saved: no scripts, styles or embeds.",
+        "template": "Zero_Cms::components/html.phtml",
+        "fields": {
+            "html": {"type": "html", "label": "HTML", "required": true, "max": 200000}
+        }
+    },
+    "text": {
+        "label": "Text",
+        "description": "A heading and paragraphs (blank line between paragraphs).",
+        "template": "Zero_Cms::components/text.phtml",
+        "fields": {
+            "heading": {"type": "text", "label": "Heading", "max": 160},
+            "body": {"type": "textarea", "label": "Text", "required": true, "max": 8000},
+            "width": {"type": "select", "label": "Width", "options": {"narrow": "Narrow (reading)", "wide": "Wide"}, "default": "narrow"}
+        }
+    },
+    "image_text": {
+        "label": "Image and text",
+        "description": "An image beside a heading, text and button.",
+        "template": "Zero_Cms::components/image-text.phtml",
+        "fields": {
+            "image": {"type": "image", "label": "Image", "required": true},
+            "heading": {"type": "text", "label": "Heading", "max": 160},
+            "body": {"type": "textarea", "label": "Text", "max": 3000},
+            "button": {"type": "link", "label": "Button"},
+            "image_side": {"type": "select", "label": "Image side", "options": {"start": "Start", "end": "End"}, "default": "start"}
+        }
+    },
+    "tiles": {
+        "label": "Tiles",
+        "description": "A grid of linked tiles, e.g. categories or collections.",
+        "template": "Zero_Cms::components/tiles.phtml",
+        "fields": {
+            "heading": {"type": "text", "label": "Heading", "max": 160},
+            "columns": {"type": "select", "label": "Columns", "options": {"2": "2", "3": "3", "4": "4"}, "default": "3"},
+            "items": {"type": "repeater", "label": "Tiles", "max": 12, "fields": {
+                "image": {"type": "image", "label": "Image"},
+                "title": {"type": "text", "label": "Title", "required": true, "max": 80},
+                "text": {"type": "text", "label": "Text", "max": 160},
+                "link": {"type": "link", "label": "Link"}
+            }}
+        }
+    },
+    "products": {
+        "label": "Product slider",
+        "description": "Products from a category or a list of SKUs, as the store's product cards.",
+        "template": "Zero_Cms::components/products.phtml",
+        "fields": {
+            "heading": {"type": "text", "label": "Heading", "max": 160},
+            "products": {"type": "products", "label": "Products", "required": true},
+            "limit": {"type": "number", "label": "Number of products", "min": 1, "max": 24, "default": 8}
+        }
+    },
+    "countdown": {
+        "label": "Countdown",
+        "description": "A live countdown to a moment: a flash sale starting or ending, new prices, a launch. After it, shows its own message, or disappears.",
+        "template": "Zero_Cms::components/countdown.phtml",
+        "fields": {
+            "eyebrow": {"type": "text", "label": "Eyebrow", "max": 80},
+            "heading": {"type": "text", "label": "Heading", "required": true, "max": 120},
+            "text": {"type": "textarea", "label": "Text", "max": 600},
+            "ends_at": {"type": "datetime", "label": "Counts down to", "required": true},
+            "button": {"type": "link", "label": "Button"},
+            "ended_text": {"type": "text", "label": "Message when it's over (empty: hide the countdown)", "max": 160},
+            "style": {"type": "select", "label": "Style", "options": {"primary": "Primary", "neutral": "Dark", "light": "Light"}, "default": "primary"}
+        }
+    },
+    "faq": {
+        "label": "FAQ",
+        "description": "Questions and answers, open one at a time; marked up for search engines.",
+        "template": "Zero_Cms::components/faq.phtml",
+        "fields": {
+            "heading": {"type": "text", "label": "Heading", "max": 160},
+            "items": {"type": "repeater", "label": "Questions", "max": 30, "fields": {
+                "question": {"type": "text", "label": "Question", "required": true, "max": 255},
+                "answer": {"type": "textarea", "label": "Answer", "required": true, "max": 3000}
+            }}
+        }
+    },
+    "cta": {
+        "label": "Call to action",
+        "description": "A short message with a button, on a colored band.",
+        "template": "Zero_Cms::components/cta.phtml",
+        "fields": {
+            "heading": {"type": "text", "label": "Heading", "required": true, "max": 160},
+            "text": {"type": "textarea", "label": "Text", "max": 600},
+            "button": {"type": "link", "label": "Button", "required": true},
+            "style": {"type": "select", "label": "Style", "options": {"primary": "Primary", "neutral": "Dark"}, "default": "primary"}
+        }
+    },
+    "spacer": {
+        "label": "Spacer",
+        "description": "Extra space between components.",
+        "template": "Zero_Cms::components/spacer.phtml",
+        "fields": {
+            "size": {"type": "select", "label": "Size", "options": {"sm": "Small", "md": "Medium", "lg": "Large"}, "default": "md"}
+        }
+    }
+}

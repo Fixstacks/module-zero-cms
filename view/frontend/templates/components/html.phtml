@@ -1,0 +1,13 @@
+<?php
+/**
+ * Copyright © 2026 Roman Pasichnyk
+ * SPDX-License-Identifier: OSL-3.0 OR AFL-3.0
+ *
+ * Zero CMS component: html (etc/zero_cms/components.json). The HTML was
+ * cleaned by Model\Content\HtmlSanitizer when saved (Validator).
+ *
+ * @var \Magento\Framework\View\Element\Template $block
+ */
+$v = (array) $block->getData('values');
+?>
+<div class="zero-prose"><?= /* @noEscape */ $v['html'] ?></div>

@@ -1,0 +1,22 @@
+<?php
+/**
+ * Copyright © 2026 Roman Pasichnyk
+ * SPDX-License-Identifier: OSL-3.0 OR AFL-3.0
+ *
+ * Zero CMS component: quote (etc/zero_cms/components.json).
+ *
+ * @var \Magento\Framework\View\Element\Template $block
+ * @var \Magento\Framework\Escaper $escaper
+ */
+$v = (array) $block->getData('values');
+/** @var \Zero\Cms\ViewModel\Component $view */
+$view = $block->getData('view');
+?>
+<figure class="flex flex-col gap-4 max-w-3xl border-s-4 border-primary ps-6">
+    <blockquote class="font-display text-3xl sm:text-4xl leading-snug text-balance">
+        <?= /* @noEscape */ $view->paragraphs($v['text']) ?>
+    </blockquote>
+    <?php if ($v['cite'] !== ''): ?>
+        <figcaption class="text-sm font-semibold uppercase tracking-widest text-base-content/70"><?= $escaper->escapeHtml($v['cite']) ?></figcaption>
+    <?php endif; ?>
+</figure>

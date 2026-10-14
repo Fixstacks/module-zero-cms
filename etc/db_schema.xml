@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!--
+    Copyright © 2026 Roman Pasichnyk
+    SPDX-License-Identifier: OSL-3.0 OR AFL-3.0
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <!-- A CMS page's or block's Zero CMS components, per store view (0 = all store views). -->
+    <table name="zero_cms_content" resource="default" engine="innodb" comment="Zero CMS Content">
+        <column xsi:type="int" name="content_id" padding="10" unsigned="true" nullable="false" identity="true"
+                comment="Content ID"/>
+        <column xsi:type="varchar" name="entity_type" nullable="false" length="20" comment="cms_page or cms_block"/>
+        <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="false"
+                comment="CMS Page or Block ID"/>
+        <column xsi:type="smallint" name="store_id" padding="5" unsigned="true" nullable="false" identity="false"
+                default="0" comment="Store View ID, 0 = all"/>
+        <column xsi:type="mediumtext" name="data" nullable="false" comment="Components (JSON)"/>
+        <column xsi:type="varchar" name="updated_by" nullable="true" length="255" comment="Admin User"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Updated At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="content_id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="ZERO_CMS_CONTENT_ENTITY_STORE">
+            <column name="entity_type"/>
+            <column name="entity_id"/>
+            <column name="store_id"/>
+        </constraint>
+    </table>
+    <!-- Earlier versions of a content row, newest first; the last 30 are kept. -->
+    <table name="zero_cms_revision" resource="default" engine="innodb" comment="Zero CMS Content Revisions">
+        <column xsi:type="int" name="revision_id" padding="10" unsigned="true" nullable="false" identity="true"
+                comment="Revision ID"/>
+        <column xsi:type="varchar" name="entity_type" nullable="false" length="20" comment="cms_page or cms_block"/>
+        <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="false"
+                comment="CMS Page or Block ID"/>
+        <column xsi:type="smallint" name="store_id" padding="5" unsigned="true" nullable="false" identity="false"
+                default="0" comment="Store View ID"/>
+        <column xsi:type="mediumtext" name="data" nullable="false" comment="Components (JSON)"/>
+        <column xsi:type="varchar" name="created_by" nullable="true" length="255" comment="Admin User"/>
+        <column xsi:type="varchar" name="note" nullable="true" length="255" comment="Note"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Created At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="revision_id"/>
+        </constraint>
+        <index referenceId="ZERO_CMS_REVISION_ENTITY" indexType="btree">
+            <column name="entity_type"/>
+            <column name="entity_id"/>
+            <column name="store_id"/>
+        </index>
+    </table>
+</schema>

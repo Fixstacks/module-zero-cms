@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--
+    Copyright © 2026 Roman Pasichnyk
+    SPDX-License-Identifier: OSL-3.0 OR AFL-3.0
+
+    "Edit with Zero CMS" next to Save.
+-->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <settings>
+        <buttons>
+            <button name="zero_cms" class="Zero\Cms\Block\Adminhtml\EditButton"/>
+        </buttons>
+    </settings>
+</form>

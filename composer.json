@@ -1,0 +1,48 @@
+{
+    "name": "fixstacks/module-zero-cms",
+    "description": "Zero for Magento Open Source: CMS pages and blocks built from typed components in a visual editor, with AI help; no page builder markup.",
+    "type": "magento2-module",
+    "version": "1.0.0",
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+    ],
+    "authors": [
+        {
+            "name": "Roman Pasichnyk"
+        }
+    ],
+    "homepage": "https://fixstacks.com/zero",
+    "keywords": [
+        "magento",
+        "magento2",
+        "magento-open-source",
+        "zero",
+        "cms",
+        "page-builder",
+        "editor"
+    ],
+    "require": {
+        "php": "~8.2.0||~8.3.0||~8.4.0",
+        "magento/framework": "103.0.*",
+        "magento/module-backend": "*",
+        "magento/module-catalog": "*",
+        "magento/module-catalog-widget": "*",
+        "magento/module-cms": "*",
+        "magento/module-config": "*",
+        "magento/module-media-storage": "*",
+        "magento/module-page-builder": "*",
+        "magento/module-store": "*",
+        "magento/module-ui": "*",
+        "magento/module-widget": "*",
+        "fixstacks/module-zero-core": "^1.0"
+    },
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Zero\\Cms\\": ""
+        }
+    }
+}

@@ -1,0 +1,76 @@
+<?php
+/**
+ * Copyright © 2026 Roman Pasichnyk
+ * SPDX-License-Identifier: OSL-3.0 OR AFL-3.0
+ *
+ * Zero CMS countdown. web/js/countdown.js keeps it live (the page may be
+ * cached) and swaps in the "over" message or hides it at the deadline.
+ * Screen readers get the deadline as a sentence, not ticking digits.
+ *
+ * @var \Magento\Framework\View\Element\Template $block
+ * @var \Magento\Framework\Escaper $escaper
+ */
+$v = (array) $block->getData('values');
+/** @var \Zero\Cms\ViewModel\Component $view */
+$view = $block->getData('view');
+$ends = $view->timestamp($v['ends_at']);
+if ($ends === null) {
+    return;
+}
+$left = max(0, $ends - time());
+$over = $left === 0;
+$units = [
+    'days' => [min(999, intdiv($left, 86400)), __('Days')],
+    'hours' => [intdiv($left % 86400, 3600), __('Hours')],
+    'minutes' => [intdiv($left % 3600, 60), __('Minutes')],
+    'seconds' => [$left % 60, __('Seconds')],
+];
+$styles = [
+    'primary' => ['bg-primary text-primary-content', 'btn-neutral'],
+    'neutral' => ['bg-neutral text-neutral-content', 'btn-primary'],
+    'light' => ['bg-base-200 text-base-content', 'btn-primary'],
+];
+[$surface, $buttonClass] = $styles[$v['style']] ?? $styles['primary'];
+$hasButton = $v['button']['url'] !== '' && $v['button']['label'] !== '';
+?>
+<section class="<?= /* @noEscape */ $surface ?> px-6 py-10 sm:px-12 sm:py-12 flex flex-col lg:flex-row lg:items-center justify-between gap-8"
+         data-zero-countdown
+         data-ends="<?= (int) $ends * 1000 ?>"
+         <?= $over && $v['ended_text'] === '' ? 'hidden' : '' ?>>
+    <div class="flex flex-col gap-3 max-w-xl">
+        <?php if ($v['eyebrow'] !== ''): ?>
+            <span class="text-xs font-semibold uppercase tracking-widest"><?= $escaper->escapeHtml($v['eyebrow']) ?></span>
+        <?php endif; ?>
+        <h2 class="text-3xl sm:text-4xl font-medium tracking-tight text-balance"><?= $escaper->escapeHtml($v['heading']) ?></h2>
+        <?= /* @noEscape */ $view->paragraphs($v['text'], 'max-w-prose') ?>
+        <p class="text-sm" data-countdown-when <?= $over ? 'hidden' : '' ?>>
+            <?= /* @noEscape */ __(
+                'Until %1',
+                '<time datetime="' . $escaper->escapeHtmlAttr($view->isoDateTime($ends)) . '">'
+                . $escaper->escapeHtml($view->formatDateTime($ends)) . '</time>'
+            ) ?>
+        </p>
+    </div>
+    <div class="flex flex-col gap-5 items-start lg:items-end">
+        <div class="flex gap-2 sm:gap-3" aria-hidden="true" data-countdown-timer <?= $over ? 'hidden' : '' ?>>
+            <?php foreach ($units as $unit => [$value, $label]): ?>
+                <div class="flex flex-col items-center gap-1 bg-current/10 rounded-box px-3 py-2 sm:px-4 sm:py-3 min-w-16 sm:min-w-20"
+                     data-unit="<?= /* @noEscape */ $unit ?>" <?= $unit === 'days' && $value === 0 ? 'hidden' : '' ?>>
+                    <span class="countdown font-mono text-3xl sm:text-5xl font-medium">
+                        <span style="--value:<?= (int) $value ?>;<?= $unit === 'days' ? '' : ' --digits:2;' ?>"><?= (int) $value ?></span>
+                    </span>
+                    <span class="text-xs uppercase tracking-widest"><?= $escaper->escapeHtml($label) ?></span>
+                </div>
+            <?php endforeach; ?>
+        </div>
+        <?php if ($v['ended_text'] !== ''): ?>
+            <p class="text-2xl font-medium" data-countdown-ended <?= $over ? '' : 'hidden' ?>><?= $escaper->escapeHtml($v['ended_text']) ?></p>
+        <?php endif; ?>
+        <?php if ($hasButton): ?>
+            <a href="<?= $escaper->escapeUrl($v['button']['url']) ?>" class="btn <?= /* @noEscape */ $buttonClass ?>">
+                <?= $escaper->escapeHtml($v['button']['label']) ?>
+            </a>
+        <?php endif; ?>
+    </div>
+</section>
+<script src="<?= $escaper->escapeUrl($block->getViewFileUrl('Zero_Cms::js/countdown.js')) ?>" defer></script>

@@ -1,0 +1,14 @@
+<?php
+/**
+ * Copyright © 2026 Roman Pasichnyk
+ * SPDX-License-Identifier: OSL-3.0 OR AFL-3.0
+ *
+ * Zero CMS component: article, long Markdown text (etc/zero_cms/components.json).
+ *
+ * @var \Magento\Framework\View\Element\Template $block
+ */
+$v = (array) $block->getData('values');
+/** @var \Zero\Cms\ViewModel\Component $view */
+$view = $block->getData('view');
+?>
+<div class="zero-prose"><?= /* @noEscape */ $view->markdown((string) $v['body']) ?></div>

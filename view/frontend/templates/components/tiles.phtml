@@ -1,0 +1,43 @@
+<?php
+/**
+ * Copyright © 2026 Roman Pasichnyk
+ * SPDX-License-Identifier: OSL-3.0 OR AFL-3.0
+ *
+ * Zero CMS component: tiles (etc/zero_cms/components.json).
+ *
+ * @var \Magento\Framework\View\Element\Template $block
+ * @var \Magento\Framework\Escaper $escaper
+ */
+$v = (array) $block->getData('values');
+/** @var \Zero\Cms\ViewModel\Component $view */
+$view = $block->getData('view');
+?>
+<?php
+// Literal classes so Tailwind builds them.
+$columns = ['2' => 'sm:grid-cols-2', '3' => 'sm:grid-cols-2 lg:grid-cols-3', '4' => 'sm:grid-cols-2 lg:grid-cols-4'][$v['columns']] ?? 'sm:grid-cols-2 lg:grid-cols-3';
+?>
+<section class="flex flex-col gap-6">
+    <?php if ($v['heading'] !== ''): ?>
+        <h2 class="text-2xl sm:text-3xl font-medium tracking-tight"><?= $escaper->escapeHtml($v['heading']) ?></h2>
+    <?php endif; ?>
+    <ul class="grid grid-cols-1 <?= /* @noEscape */ $columns ?> gap-5">
+        <?php foreach ($v['items'] as $item): ?>
+            <?php
+            $image = $view->mediaUrl($item['image']['path']);
+            $url = $item['link']['url'];
+            ?>
+            <li class="flex flex-col gap-2">
+                <?php if ($url !== ''): ?><a href="<?= $escaper->escapeUrl($url) ?>" class="group flex flex-col gap-2"><?php endif; ?>
+                <?php if ($image): ?>
+                    <img src="<?= $escaper->escapeUrl($image) ?>" alt="<?= $escaper->escapeHtmlAttr($item['image']['alt']) ?>"
+                         loading="lazy" class="w-full aspect-[4/5] object-cover bg-base-200">
+                <?php endif; ?>
+                <span class="font-medium text-lg <?= $url !== '' ? 'group-hover:underline' : '' ?>"><?= $escaper->escapeHtml($item['title']) ?></span>
+                <?php if ($item['text'] !== ''): ?>
+                    <span class="text-sm text-base-content/80"><?= $escaper->escapeHtml($item['text']) ?></span>
+                <?php endif; ?>
+                <?php if ($url !== ''): ?></a><?php endif; ?>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+</section>

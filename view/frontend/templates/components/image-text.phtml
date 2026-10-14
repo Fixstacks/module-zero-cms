@@ -1,0 +1,32 @@
+<?php
+/**
+ * Copyright © 2026 Roman Pasichnyk
+ * SPDX-License-Identifier: OSL-3.0 OR AFL-3.0
+ *
+ * Zero CMS component: image and text (etc/zero_cms/components.json).
+ *
+ * @var \Magento\Framework\View\Element\Template $block
+ * @var \Magento\Framework\Escaper $escaper
+ */
+$v = (array) $block->getData('values');
+/** @var \Zero\Cms\ViewModel\Component $view */
+$view = $block->getData('view');
+?>
+<?php $image = $view->mediaUrl($v['image']['path']); ?>
+<section class="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+    <?php if ($image): ?>
+        <img src="<?= $escaper->escapeUrl($image) ?>" alt="<?= $escaper->escapeHtmlAttr($v['image']['alt']) ?>"
+             loading="lazy" class="w-full aspect-[4/3] object-cover object-top bg-base-200 <?= $v['image_side'] === 'end' ? 'md:order-last' : '' ?>">
+    <?php endif; ?>
+    <div class="flex flex-col gap-4">
+        <?php if ($v['heading'] !== ''): ?>
+            <h2 class="text-2xl sm:text-3xl font-medium tracking-tight"><?= $escaper->escapeHtml($v['heading']) ?></h2>
+        <?php endif; ?>
+        <?= /* @noEscape */ $view->paragraphs($v['body'], 'leading-relaxed') ?>
+        <?php if ($v['button']['url'] !== '' && $v['button']['label'] !== ''): ?>
+            <a href="<?= $escaper->escapeUrl($v['button']['url']) ?>" class="btn btn-neutral self-start">
+                <?= $escaper->escapeHtml($v['button']['label']) ?>
+            </a>
+        <?php endif; ?>
+    </div>
+</section>

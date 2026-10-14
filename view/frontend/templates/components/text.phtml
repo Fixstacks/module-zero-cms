@@ -1,0 +1,20 @@
+<?php
+/**
+ * Copyright © 2026 Roman Pasichnyk
+ * SPDX-License-Identifier: OSL-3.0 OR AFL-3.0
+ *
+ * Zero CMS component: text (etc/zero_cms/components.json).
+ *
+ * @var \Magento\Framework\View\Element\Template $block
+ * @var \Magento\Framework\Escaper $escaper
+ */
+$v = (array) $block->getData('values');
+/** @var \Zero\Cms\ViewModel\Component $view */
+$view = $block->getData('view');
+?>
+<section class="flex flex-col gap-4 <?= $v['width'] === 'narrow' ? 'max-w-prose' : '' ?>">
+    <?php if ($v['heading'] !== ''): ?>
+        <h2 class="text-2xl sm:text-3xl font-medium tracking-tight"><?= $escaper->escapeHtml($v['heading']) ?></h2>
+    <?php endif; ?>
+    <div class="flex flex-col gap-4 leading-relaxed"><?= /* @noEscape */ $view->paragraphs($v['body']) ?></div>
+</section>

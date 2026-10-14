@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!--
+    Copyright © 2026 Roman Pasichnyk
+    SPDX-License-Identifier: OSL-3.0 OR AFL-3.0
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!-- AI providers for the editor. Another one: implement Model\Ai\ClientInterface, add it to both lists. -->
+    <type name="Zero\Cms\Model\Ai\Assistant">
+        <arguments>
+            <argument name="clients" xsi:type="array">
+                <item name="anthropic" xsi:type="object">Zero\Cms\Model\Ai\Anthropic\Proxy</item>
+                <!-- The same client: MessagesApi sends to Bedrock when the provider is bedrock. -->
+                <item name="bedrock" xsi:type="object">Zero\Cms\Model\Ai\Anthropic\Proxy</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Zero\Cms\Model\Config\Source\AiProvider">
+        <arguments>
+            <argument name="providers" xsi:type="array">
+                <item name="anthropic" xsi:type="string">Anthropic API (Claude)</item>
+                <item name="bedrock" xsi:type="string">Amazon Bedrock (Claude in your AWS account)</item>
+            </argument>
+        </arguments>
+    </type>
+    <!-- What the editor can edit. Another module adds its type here (Zero_Blog: blog posts). -->
+    <type name="Zero\Cms\Model\Content\Target\Pool">
+        <arguments>
+            <argument name="types" xsi:type="array">
+                <item name="cms_page" xsi:type="object">Zero\Cms\Model\Content\Target\CmsPage\Proxy</item>
+                <item name="cms_block" xsi:type="object">Zero\Cms\Model\Content\Target\CmsBlock\Proxy</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Config\Model\Config\TypePool">
+        <arguments>
+            <argument name="sensitive" xsi:type="array">
+                <item name="zero_cms/ai/api_key" xsi:type="string">1</item>
+                <item name="zero_cms/ai/bedrock_api_key" xsi:type="string">1</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

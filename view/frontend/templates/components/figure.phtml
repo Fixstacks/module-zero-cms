@@ -1,0 +1,25 @@
+<?php
+/**
+ * Copyright © 2026 Roman Pasichnyk
+ * SPDX-License-Identifier: OSL-3.0 OR AFL-3.0
+ *
+ * Zero CMS component: figure, an image with a caption (etc/zero_cms/components.json).
+ *
+ * @var \Magento\Framework\View\Element\Template $block
+ * @var \Magento\Framework\Escaper $escaper
+ */
+$v = (array) $block->getData('values');
+/** @var \Zero\Cms\ViewModel\Component $view */
+$view = $block->getData('view');
+$image = $view->mediaUrl($v['image']['path']);
+if ($image === '') {
+    return;
+}
+?>
+<figure class="flex flex-col gap-3 <?= $v['size'] === 'wide' ? '' : 'max-w-3xl' ?>">
+    <img src="<?= $escaper->escapeUrl($image) ?>" alt="<?= $escaper->escapeHtmlAttr($v['image']['alt']) ?>"
+         loading="lazy" decoding="async" class="w-full h-auto bg-base-200">
+    <?php if ($v['caption'] !== ''): ?>
+        <figcaption class="text-sm text-base-content/70"><?= $escaper->escapeHtml($v['caption']) ?></figcaption>
+    <?php endif; ?>
+</figure>
