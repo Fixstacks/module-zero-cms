@@ -40,6 +40,12 @@ class Editor implements ArgumentInterface
     }
 
     /**
+     * The editor's settings. Another module may add (afterGetConfig) 'actions'
+     * — buttons next to Save, [label, url]: the editor posts its content there
+     * and opens the 'redirect' it answers with — and 'notice', shown instead
+     * of the own/inherited text (Zero_Staging's "Schedule…" and its scheduled
+     * content).
+     *
      * @param array{type: string, id: int, store: int, entity: object, title: string, handler: \Zero\Cms\Model\Content\Target\TypeInterface} $target
      */
     public function getConfig(array $target): array

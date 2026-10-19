@@ -550,6 +550,23 @@
         });
     }
 
+    /**
+     * A button another module adds (config.actions: label, url): posts the
+     * content as Save does and opens the address it answers with (Zero
+     * Staging's "Schedule…" puts it into a campaign).
+     */
+    function action(spec) {
+        return el('button', { type: 'button', className: 'action-secondary', text: spec.label, onclick: function () {
+            ui.status.textContent = t.saving;
+            post(spec.url, { content: payload() })
+                .then(function (json) {
+                    state.dirty = false;
+                    window.location.href = json.redirect;
+                })
+                .catch(function (error) { ui.status.textContent = format(t.error, error.message); });
+        } });
+    }
+
     function save() {
         ui.save.disabled = true;
         ui.status.textContent = t.saving;
@@ -561,7 +578,7 @@
                 state.dirty = false;
                 config.state = 'own';
                 ui.status.textContent = t.saved + (json.warnings && json.warnings.length ? ' — ' + json.warnings.join(' ') : '');
-                ui.notice.textContent = t.own;
+                ui.notice.textContent = config.notice || t.own;
                 renderVersions();
                 renderList();
                 renderForm();
@@ -614,7 +631,7 @@
                     fitPreview();
                 } });
         };
-        ui.notice = el('p', { className: 'zcms-notice', text: config.state === 'own' ? t.own : (config.state === 'inherited' ? t.inherited : t.newContent) });
+        ui.notice = el('p', { className: 'zcms-notice', text: config.notice || (config.state === 'own' ? t.own : (config.state === 'inherited' ? t.inherited : t.newContent)) });
 
         var addSelect = el('select', { id: addId, className: 'admin__control-select' }, Object.keys(config.components).map(function (code) {
             return el('option', { value: code, text: config.components[code].label });
@@ -644,9 +661,8 @@
                 }
             } }) : null,
             config.ai ? translateControl() : null,
-            ui.status,
-            ui.save
-        ]));
+            ui.status
+        ].concat((config.actions || []).map(action)).concat([ui.save])));
         root.appendChild(ui.notice);
         root.appendChild(el('div', { className: 'zcms-layout' }, [
             el('div', { className: 'zcms-side' }, [
