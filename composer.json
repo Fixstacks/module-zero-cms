@@ -2,7 +2,7 @@
     "name": "fixstacks/module-zero-cms",
     "description": "Zero for Magento Open Source: CMS pages and blocks built from typed components in a visual editor, with AI help; no page builder markup.",
     "type": "magento2-module",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "license": [
         "OSL-3.0",
         "AFL-3.0"
@@ -35,7 +35,7 @@
         "magento/module-store": "*",
         "magento/module-ui": "*",
         "magento/module-widget": "*",
-        "fixstacks/module-zero-core": "^1.1"
+        "fixstacks/module-zero-core": "^1.2"
     },
     "autoload": {
         "files": [
