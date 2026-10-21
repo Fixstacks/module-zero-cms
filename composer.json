@@ -1,8 +1,8 @@
 {
-    "name": "fixstacks/module-zero-cms",
+    "name": "zerofront/module-zero-cms",
     "description": "Zero for Magento Open Source: CMS pages and blocks built from typed components in a visual editor, with AI help; no page builder markup.",
     "type": "magento2-module",
-    "version": "1.3.2",
+    "version": "1.3.3",
     "license": [
         "OSL-3.0",
         "AFL-3.0"
@@ -12,7 +12,7 @@
             "name": "Roman Pasichnyk"
         }
     ],
-    "homepage": "https://fixstacks.com/zero",
+    "homepage": "https://zerofront.dev",
     "keywords": [
         "magento",
         "magento2",
@@ -35,7 +35,10 @@
         "magento/module-store": "*",
         "magento/module-ui": "*",
         "magento/module-widget": "*",
-        "fixstacks/module-zero-core": "^1.3"
+        "zerofront/module-zero-core": "^1.3"
+    },
+    "replace": {
+        "fixstacks/module-zero-cms": "self.version"
     },
     "autoload": {
         "files": [

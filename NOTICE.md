@@ -1,4 +1,4 @@
-# fixstacks/module-zero-cms — licensing
+# zerofront/module-zero-cms — licensing
 
 Copyright © 2026 Roman Pasichnyk.
 
